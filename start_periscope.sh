@@ -39,16 +39,20 @@ timeout=10
 echo "Wait $timeout seconds for the POSTGRES DB to start up"
 sleep $timeout
 
+docker inspect periscope &>/dev/null && docker rm -f periscope
+
+DB_ADDR=$(docker inspect -f "{{.NetworkSettings.IPAddress}}" peripostgresql)
+
 # Start the Periscope application
 docker run -d --name="periscope" \
 -e "PERISCOPE_HBM2DDL_STRATEGY=$PERISCOPE_HBM2DDL_STRATEGY" \
 -e "PERISCOPE_DB_PORT_5432_TCP_PORT=$PERISCOPE_DB_PORT_5432_TCP_PORT" \
+-e "PERISCOPE_DB_PORT_5432_TCP_ADDR=$DB_ADDR" \
 -e "PERISCOPE_SMTP_HOST=$PERISCOPE_SMTP_HOST" \
 -e "PERISCOPE_SMTP_USERNAME=$PERISCOPE_SMTP_USERNAME" \
 -e "PERISCOPE_SMTP_PASSWORD=$PERISCOPE_SMTP_PASSWORD" \
 -e "PERISCOPE_SMTP_FROM=$PERISCOPE_SMTP_FROM" \
 -e "PERISCOPE_SMTP_PORT=$PERISCOPE_SMTP_PORT" \
--e "PERISCOPE_DB_PORT_5432_TCP_ADDR=$PERISCOPE_DB_PORT_5432_TCP_ADDR" \
 -e "PERISCOPE_CLOUDBREAK_URL=$PERISCOPE_CLOUDBREAK_URL" \
 -e "PERISCOPE_IDENTITY_SERVER_URL=$PERISCOPE_IDENTITY_SERVER_URL" \
 -e "PERISCOPE_CLIENT_ID=$PERISCOPE_CLIENT_ID" \
@@ -63,3 +67,5 @@ cat <<EOF
 Periscope is running on: $PERISCOPE_ADDR:$PERISCOPE_SERVER_PORT
 ================================================================
 EOF
+
+docker logs -f periscope

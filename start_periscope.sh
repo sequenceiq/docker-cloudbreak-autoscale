@@ -45,7 +45,7 @@ check-docker-version
 
 : ${PERISCOPE_DOCKER_IMAGE_TAG:=latest}
 
-#docker pull sequenceiq/periscope:$PERISCOPE_DOCKER_IMAGE_TAG
+docker pull sequenceiq/periscope:$PERISCOPE_DOCKER_IMAGE_TAG
 
 # Removes previous containers
 docker inspect peripostgresql &>/dev/null && docker rm -f peripostgresql

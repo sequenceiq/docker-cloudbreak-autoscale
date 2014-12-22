@@ -2,21 +2,26 @@
 
 ### Get the repository
 
-In order to deploy Periscope locally using Docker you'll need to clone this repository: `git clone https://github.com/sequenceiq/docker-periscope.git`. The repo contains a bunch of shell scripts for remote and local deployments as well. 
+In order to deploy Periscope locally using Docker you'll need to clone this repository: 
+
+```git clone https://github.com/sequenceiq/docker-periscope.git```
+
+The repo contains a bunch of shell scripts for remote and local deployments as well. 
 
 ### Host the full stack
 
-If you want to host the full stack (Postgres, UAA, Periscope) use the scripts found in the `local` directory. All you have to do is to fill out the `env_props.sh.sample` file and rename it to `env_props.sh`. Basically it's for the SMTP settings which are used by Periscope to send notifications. 
+If you want to host the full stack (Postgres, UAA, Periscope) use the scripts found in the `local` directory. All you have to do is to fill out the `env_props.sh.sample` file and rename it to `env_props.sh`. These are the SMTP settings which are used by Periscope to send notifications. 
 
 `Note: if you are using bare metal without Cloudbreak for deployments you can leave the PERISCOPE_CLOUDBREAK_URL as it is.` 
 
-After the `env_props.sh` is ready simply launch the `start_periscope.sh` and it will do everything automatically for you. What's this shell script is doing:
+After the `env_props.sh` configuration is ready simply launch the `start_periscope.sh` and it will do everything automatically for you. What's this shell script is doing:
+
 * It pulls the sequenceiq/periscope, sequenceiq/uaa and the postgres Docker images from Docker registry.
 * Since Periscope is using OAuth2 for security we'll need an UAA server and a DB for the user management. The script will launch these 2 components in a Docker container so you don't have to deal with this. We are using `Cloudfoundry's` UAA server. Obviously if you are already hosting a ResourceServer you can use that one as well. For reference you can find the UAA Dockerfile and configuration [here](https://github.com/sequenceiq/docker-uaa). We pre-configured a default user, but you can change it anyway you want, default settings are: username: `admin@sequenceiq.com` password: `seqadmin`.
 * After the UAA is up and running it will launch a postgres Docker container for storing the `Clusters` `Alarms` and `Scaling policies`.
-* The last part is when it launches the Periscope itself automatically connected to the previously launched postgres DB and UAA server.
+* Will Periscope itself and connect to the previously launched postgres DB and UAA server.
 
-The result will be 4 running Docker containers and seeing Periscope's log at the end: `docker logs -f periscope`.
+The result will be 4 running Docker containers and you can see Periscope's log at the end: `docker logs -f periscope`.
 
 ### Adding an Ambari managed Hadoop cluster
 

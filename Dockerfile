@@ -1,7 +1,7 @@
 FROM java:7
 MAINTAINER SequenceIQ
 
-ADD https://s3-eu-west-1.amazonaws.com/maven.sequenceiq.com/releases/com/sequenceiq/periscope/0.4.2/periscope-0.4.2.jar /periscope.jar
+ADD https://s3-eu-west-1.amazonaws.com/maven.sequenceiq.com/releases/com/sequenceiq/periscope/0.5.1/periscope-0.5.1.jar /periscope.jar
 
 ADD bootstrap /tmp
 

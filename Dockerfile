@@ -1,7 +1,7 @@
 FROM java:7
 MAINTAINER SequenceIQ
 
-ENV VERSION 0.5.2
+ENV VERSION 0.5.3
 # install the periscope app
 ADD https://s3-eu-west-1.amazonaws.com/maven.sequenceiq.com/releases/com/sequenceiq/periscope/$VERSION/periscope-$VERSION.jar /periscope.jar
 

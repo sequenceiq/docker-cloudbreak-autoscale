@@ -1,3 +1,6 @@
+: ${DOCKERHUB_USERNAME:?"The DOCKERHUB_USERNAME environment variable must be set!"}
+: ${DOCKERHUB_PASSWORD:?"The DOCKERHUB_PASSWORD environment variable must be set!"}
+
 install_deps() {
   if ! dockerhub-tag --version &>/dev/null ;then
     echo "---> installing dockerhub-tag binary to /usr/local/bin" 1>&2

@@ -1,5 +1,6 @@
 #!/bin/bash
 
+[[ "$TRACE" ]] && set -x
 : ${SECURE_RANDOM:=true}
 
 echo "Starting the Periscope application..."
@@ -9,7 +10,7 @@ if [ -n "$CERT_URL" ]; then
 fi
 
 if [ "$SECURE_RANDOM" == "false" ]; then
-  CB_PARAMS=-Djava.security.egd=file:/dev/urandom
+  CB_JAVA_OPTS="$CB_JAVA_OPTS -Djava.security.egd=file:/dev/./urandom"
 fi
 
-java $CB_PARAMS -jar /periscope.jar
+java $CB_JAVA_OPTS -jar /periscope.jar
